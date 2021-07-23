@@ -5,8 +5,35 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       minWidth: 275,
     },
-    title: {
+    date: {
       fontSize: 14,
+    },
+    city: {
+
+    },
+    iconContainer: {
+      margin: theme.spacing(1, 0),
+      marginLeft: -10
+    },
+    icon: {
+      
+    },
+    currentTemp: {
+      fontSize: 40
+    },
+    maxMinTempContainer: {
+
+    },
+    indicatorIcon: {
+      width: 25
+    },
+    titleIndicatorTemp: {
+      fontSize: 18,
+      marginLeft: 3
+    },
+    valueIndicatorTemp: {
+      fontSize: 18,
+      marginLeft: 6
     },
     pos: {
       marginBottom: 12,
