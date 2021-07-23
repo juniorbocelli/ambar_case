@@ -5,23 +5,26 @@ import {
   CardContent,
   Button,
   Typography,
- } from '@material-ui/core/';
+} from '@material-ui/core/';
 
 import { IUseStates } from '../../states';
 import useStyles from './styles';
 
 const CityWeatherCard: React.FC<IUseStates> = (states) => {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
+
+  const {
+    cityInfo,
+  } = states;
 
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Word of the Day
+          {cityInfo.date}
         </Typography>
         <Typography variant="h5" component="h2">
-          be{bull}nev{bull}o{bull}lent
+          {cityInfo.name}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
           adjective

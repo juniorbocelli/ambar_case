@@ -32,10 +32,11 @@ export default function useStates(): IUseStates {
   const [selectedCity, setSelectedCity] = React.useState<SelectedCityState>(undefined);
   const [cityInfo, setCityInfo] = React.useState<CityInfoState>({
     name: '',
-    temp: 0,
-    temp_max: 0,
-    temp_min: 0,
+    temp: '',
+    temp_max: '',
+    temp_min: '',
     icon: '',
+    date: '',
   })
 
   return {

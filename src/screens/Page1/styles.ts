@@ -8,14 +8,21 @@ const useStyles = makeStyles((theme: Theme) =>
     content: {
       width: '100%',
       padding: theme.spacing(1, 2, 2, 2),
+      minHeight: 400,
     },
     title: {
-      marginBottom: theme.spacing(3),
+      marginBottom: theme.spacing(4),
     },
     formControl: {
       margin: theme.spacing(0),
       minWidth: 200,
     },
+    buttonsContainer: {
+      marginBottom: theme.spacing(6),
+    },
+    weatherCardContainer: {
+
+    }
   }),
 );
 

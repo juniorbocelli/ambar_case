@@ -8,23 +8,21 @@ import {
   Switch
 } from 'react-router-dom';
 
+import * as GlobalEndpoints from '../../globals/endpoints';
+
+import Page1 from '../../screens/Page1';
+import Page2 from '../../screens/Page2';
+
 const Router = () => {
 
   return (
     <BrowserRouter>
       <Switch>
-
-        {/* <Route path="/app/test" exact component={ArchTestScreen} />
-        <Route path={GlobalEndpoints.SCREEN_USER_LIST} exact component={ListUsers} />
-        <Route path={GlobalEndpoints.SCREEN_USER_NEW} exact component={NewUser} />
-        <Route path={GlobalEndpoints.SCREEN_SUPPLIER_LIST} exact component={ListSuppliers} />
-        <Route path={GlobalEndpoints.SCREEN_SUPPLIER_NEW} exact component={NewSupplier} />
-        <Route path={GlobalEndpoints.SCREEN_PRODUCT_LIST} exact component={ListProducts} />
-        <Route path={GlobalEndpoints.SCREEN_PRODUCT_NEW} exact component={NewProduct} /> */}
-
+        <Route path={GlobalEndpoints.SCREEN_PAGE_1} exact component={Page1} />
+        <Route path={GlobalEndpoints.SCREEN_PAGE_2} exact component={Page2} />
 
         <Route path="*">
-          <Redirect to="/app/test" />
+          <Redirect to={GlobalEndpoints.SCREEN_PAGE_1} />
         </Route>
 
       </Switch>

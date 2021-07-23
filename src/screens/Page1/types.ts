@@ -5,8 +5,9 @@ export type ErrorMessageState = string;
 export type SelectedCityState = undefined | string;
 export type CityInfoState = {
     name: string;
-    temp: number;
-    temp_min: number;
-    temp_max: number;
+    temp: string;
+    temp_min: string;
+    temp_max: string;
     icon: string;
+    date: string;
 }
