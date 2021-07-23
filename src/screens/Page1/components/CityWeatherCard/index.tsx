@@ -54,7 +54,7 @@ const CityWeatherCard: React.FC<IUseStates> = (states) => {
           </Grid>
           <Grid item>
             <Typography className={classes.valueIndicatorTemp} color="textSecondary">
-              {cityInfo.temp_min}
+              {cityInfo.temp_min} ºC
             </Typography>
           </Grid>
         </Grid>
@@ -70,7 +70,7 @@ const CityWeatherCard: React.FC<IUseStates> = (states) => {
           </Grid>
           <Grid item>
             <Typography className={classes.valueIndicatorTemp} color="textSecondary">
-              {cityInfo.temp_max}
+              {cityInfo.temp_max} ºC
             </Typography>
           </Grid>
         </Grid>

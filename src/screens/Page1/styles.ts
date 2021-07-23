@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: theme.spacing(6),
     },
     weatherCardContainer: {
-
-    }
+      minHeight: 300
+    },
   }),
 );
 

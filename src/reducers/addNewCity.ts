@@ -5,16 +5,14 @@ const initialState = {
 };
 
 export type NewCityInfo = {
-    cityName: string;
-    temp_min: number;
-    temp_max: number,
+  cityName: string;
+  temp_min: string;
+  temp_max: string,
 }
 
 export type Action = {
-    type: string;
-    payload: {
-      newCityArray: Array<NewCityInfo>
-    }
+  type: string;
+  newCityArray: Array<NewCityInfo>;
 }
 
 export const addNewCity = (state = initialState, action: Action) => {
@@ -22,7 +20,7 @@ export const addNewCity = (state = initialState, action: Action) => {
     case ADD_NEW_CITY_INFO:
       return {
         ...state,
-        newCityArray: action.payload.newCityArray
+        newCityArray: action.newCityArray
       };
 
     default:

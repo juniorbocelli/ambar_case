@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import {
   Paper,
   Typography,
@@ -9,6 +10,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { addNewCity } from '../../actions';
+import { NewCityInfo } from '../../reducers/addNewCity';
 
 import BackDrop from '../../ui/components/BackDrop';
 import AlertDialog from '../../ui/components/AlertDialog';
@@ -17,11 +19,18 @@ import CityWeatherCard from './components/CityWeatherCard';
 import useStyles from './styles';
 import useStates from './states';
 import useAPIs from './apis';
+import { SCREEN_PAGE_2 } from '../../globals/endpoints';
 
-const Page1: React.FC<React.ReactFragment> = (props) => {
+interface IPage1Props {
+  addNewCity: (value: Array<NewCityInfo>) => void;
+  newCityArray: Array<NewCityInfo>;
+}
+
+const Page1: React.FC<IPage1Props> = (props) => {
   const classes = useStyles();
   const states = useStates();
   const apis = useAPIs(states);
+  const history = useHistory();
 
   const {
     isQueryingAPI,
@@ -31,11 +40,45 @@ const Page1: React.FC<React.ReactFragment> = (props) => {
 
     selectedCity,
     setSelectedCity,
+    cityInfo
   } = states;
 
+  const {
+    newCityArray,
+    addNewCity,
+  } = props;
+
   React.useEffect(() => {
+    // Simplesmente consulta a api para buscar dados da cidade
     if(selectedCity !== undefined) apis.fetchCityWheaterInfo();
+
   }, [selectedCity]);
+
+  React.useEffect(() => {
+    let arrayToInsert: Array<NewCityInfo> = newCityArray;
+
+    // Para evitarmos inserção de cidades repetidas temos que determinar o valor do comprimento máximo
+    // do vetor igual a 3. Essa verificação é desnecessária do ponto de vista lógico (pois a segunda verificação 
+    // bastaria) porém, ela evita percorrer o vetor toda vez, tornando o processamento mais rápido
+    if (newCityArray.length >= 3) return;
+
+    // Também temos que determinar se determinada cidade já está inserida, pois o usuário pode selecionar uma cidade,
+    // selecionar outra e voltar para a primeira seleção
+    if (arrayToInsert.filter((item: NewCityInfo) => {return item.cityName === cityInfo.name}).length !== 0) return;
+
+    // Evita adicionar quando monta o componente
+    if (cityInfo.name !== '' && cityInfo.temp_min !== '' && cityInfo.temp_max !== '') {
+      arrayToInsert.push({
+        cityName: cityInfo.name,
+        temp_min: cityInfo.temp_min,
+        temp_max: cityInfo.temp_max,
+      });
+  
+      addNewCity(arrayToInsert);
+    }
+
+    console.log(props);
+  }, [cityInfo]);
 
   const clickCityButtonHandle = (city: string) => {
     setSelectedCity(city);
@@ -93,6 +136,13 @@ const Page1: React.FC<React.ReactFragment> = (props) => {
             {selectedCity && <CityWeatherCard {...states} />}
           </Grid>
         </Grid>
+
+        <Grid justifyContent="flex-end" container>
+          <Grid item>
+          <Button onClick={() => history.push(SCREEN_PAGE_2)}>Mostrar Min/Max</Button>
+          </Grid>
+        </Grid>
+        
       </Paper>
     </div>
   );
