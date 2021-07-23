@@ -21,6 +21,8 @@ import useStates from './states';
 import useAPIs from './apis';
 import { SCREEN_PAGE_2 } from '../../globals/endpoints';
 
+import { database } from '../../features/firebase';
+
 interface IPage1Props {
   addNewCity: (value: Array<NewCityInfo>) => void;
   newCityArray: Array<NewCityInfo>;
@@ -50,12 +52,15 @@ const Page1: React.FC<IPage1Props> = (props) => {
 
   React.useEffect(() => {
     // Simplesmente consulta a api para buscar dados da cidade
-    if(selectedCity !== undefined) apis.fetchCityWheaterInfo();
+    if (selectedCity !== undefined) apis.fetchCityWheaterInfo();
 
   }, [selectedCity]);
 
   React.useEffect(() => {
     let arrayToInsert: Array<NewCityInfo> = newCityArray;
+
+    // Salva medição no log
+    apis.insertTempInLogFirebase();
 
     // Para evitarmos inserção de cidades repetidas temos que determinar o valor do comprimento máximo
     // do vetor igual a 3. Essa verificação é desnecessária do ponto de vista lógico (pois a segunda verificação 
@@ -64,7 +69,7 @@ const Page1: React.FC<IPage1Props> = (props) => {
 
     // Também temos que determinar se determinada cidade já está inserida, pois o usuário pode selecionar uma cidade,
     // selecionar outra e voltar para a primeira seleção
-    if (arrayToInsert.filter((item: NewCityInfo) => {return item.cityName === cityInfo.name}).length !== 0) return;
+    if (arrayToInsert.filter((item: NewCityInfo) => { return item.cityName === cityInfo.name }).length !== 0) return;
 
     // Evita adicionar quando monta o componente
     if (cityInfo.name !== '' && cityInfo.temp_min !== '' && cityInfo.temp_max !== '') {
@@ -73,12 +78,24 @@ const Page1: React.FC<IPage1Props> = (props) => {
         temp_min: cityInfo.temp_min,
         temp_max: cityInfo.temp_max,
       });
-  
+
+      // Atualiza a Store
       addNewCity(arrayToInsert);
+
+      // Salva no Firebase
+      apis.updateOrInsertCurrentTempInFirebase();
     }
 
     console.log(props);
   }, [cityInfo]);
+
+  React.useEffect(() => {
+    const currentTempRef = database.ref('current_temp');
+    currentTempRef.on('value', (snapshot: any) => {
+      const data = snapshot.val();
+      console.log('currentTempData', data);
+    });
+  }, []);
 
   const clickCityButtonHandle = (city: string) => {
     setSelectedCity(city);
@@ -139,10 +156,10 @@ const Page1: React.FC<IPage1Props> = (props) => {
 
         <Grid justifyContent="flex-end" container>
           <Grid item>
-          <Button onClick={() => history.push(SCREEN_PAGE_2)}>Mostrar Min/Max</Button>
+            <Button onClick={() => history.push(SCREEN_PAGE_2)}>Mostrar Min/Max</Button>
           </Grid>
         </Grid>
-        
+
       </Paper>
     </div>
   );
