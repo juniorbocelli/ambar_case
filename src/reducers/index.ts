@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
-import { addNewCityInfo } from './addNewCityInfo';
+import { addNewCity } from './addNewCity';
 
 export const Reducers = combineReducers({
-  newCityInfoState: addNewCityInfo,
+  newCityInfoState: addNewCity,
 });

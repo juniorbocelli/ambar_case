@@ -1,7 +1,7 @@
 import { ADD_NEW_CITY_INFO } from '../actions/actionsTypes';
 
 const initialState = {
-  newValue: []
+  newCityArray: []
 };
 
 export type NewCityInfo = {
@@ -13,16 +13,16 @@ export type NewCityInfo = {
 export type Action = {
     type: string;
     payload: {
-        newValue: Array<NewCityInfo>
+      newCityArray: Array<NewCityInfo>
     }
 }
 
-export const addNewCityInfo = (state = initialState, action: Action) => {
+export const addNewCity = (state = initialState, action: Action) => {
   switch (action.type) {
     case ADD_NEW_CITY_INFO:
       return {
         ...state,
-        newValue: action.payload.newValue
+        newCityArray: action.payload.newCityArray
       };
 
     default:

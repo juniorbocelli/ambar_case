@@ -29,7 +29,7 @@ export default function useAPIs(states: IUseStates): IUseAPIs {
         temp: response.data.main.temp.toString().replace(".", ","),
         temp_min: response.data.main.temp_min.toString().replace(".", ","),
         temp_max: response.data.main.temp_max.toString().replace(".", ","),
-        icon: response.data.weather[0].icon,
+        icon: `http://openweathermap.org/img/wn/${response.data.weather[0].icon}`,
         date: Tools.printDateTimeFromTimestamp(new Date()),
       });
     }).catch(error => {

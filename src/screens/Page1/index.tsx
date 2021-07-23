@@ -5,6 +5,10 @@ import {
   Grid,
   Button,
 } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { addNewCity } from '../../actions';
 
 import BackDrop from '../../ui/components/BackDrop';
 import AlertDialog from '../../ui/components/AlertDialog';
@@ -94,4 +98,11 @@ const Page1: React.FC<React.ReactFragment> = (props) => {
   );
 }
 
-export default Page1;
+const mapStateToProps = (store: any) => ({
+  newCityArray: store.newCityInfoState.newCityArray
+});
+
+const mapDispatchToProps = (dispatch: any) =>
+  bindActionCreators({ addNewCity }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Page1);
