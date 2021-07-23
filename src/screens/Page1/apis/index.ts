@@ -9,6 +9,7 @@ export interface IUseAPIs {
   fetchCityWheaterInfo: () => void;
   updateOrInsertCurrentTempInFirebase: () => void;
   insertTempInLogFirebase: () => void;
+  watchdogCurrentTempFirebase: () => void;
 }
 
 export default function useAPIs(states: IUseStates): IUseAPIs {
@@ -77,9 +78,18 @@ export default function useAPIs(states: IUseStates): IUseAPIs {
     });
   }
 
+  const watchdogCurrentTempFirebase = () => {
+    const currentTempRef = database.ref('current_temp');
+    currentTempRef.on('value', (snapshot: any) => {
+      const data = snapshot.val();
+      console.log('currentTempData', data);
+    });
+  }
+
   return {
     fetchCityWheaterInfo,
     updateOrInsertCurrentTempInFirebase,
     insertTempInLogFirebase,
+    watchdogCurrentTempFirebase,
   }
 }
