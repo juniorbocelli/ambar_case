@@ -7,10 +7,7 @@ import {
   Button,
 } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
-import { addNewCity } from '../../actions';
-import { NewCityInfo } from '../../reducers/addNewCity';
+import { bindActionCreators, Dispatch } from 'redux';
 
 import BackDrop from '../../ui/components/BackDrop';
 import AlertDialog from '../../ui/components/AlertDialog';
@@ -18,20 +15,32 @@ import CityWeatherCard from './components/CityWeatherCard';
 
 import useStyles from './styles';
 import useStates from './states';
-import useAPIs from './apis';
-import useEffects from './effects';
-import { SCREEN_PAGE_2 } from '../../globals/endpoints';
 
-export interface IPage1Props {
-  addNewCity: (value: Array<NewCityInfo>) => void;
-  newCityArray: Array<NewCityInfo>;
+import { SCREEN_PAGE_2 } from '../../globals/endpoints';
+import { IApplicationsState } from '../../store';
+
+import * as WeatherInformationsActions from '../../store/ducks/weatherInformations/actions';
+import { IWeatherInformations } from '../../store/ducks/weatherInformations/types';
+
+interface IStateProps {
+  weatherInformations: Array<IWeatherInformations>;
 }
+
+interface IDispatchProps {
+  loadDispatch: () => void;
+}
+
+interface IOwnProps {
+
+}
+
+type IPage1Props = IStateProps & IDispatchProps & IOwnProps;
 
 const Page1: React.FC<IPage1Props> = (props) => {
   const classes = useStyles();
   const states = useStates();
-  const apis = useAPIs(states);
-  const effects = useEffects(apis);
+  // const apis = useAPIs(states);
+  // const effects = useEffects(apis);
   const history = useHistory();
 
   const {
@@ -45,19 +54,18 @@ const Page1: React.FC<IPage1Props> = (props) => {
     cityInfo
   } = states;
 
-  const {
-    newCityArray,
-    addNewCity,
-  } = props;
-
   // Adiciona efeitos
-  effects.useComponentDidMount();
-  effects.useChangeSelectedCity(states);
-  effects.useChangeCityInfo({newCityArray, addNewCity, states});
+  // effects.useComponentDidMount();
+  // effects.useChangeSelectedCity(states);
+  // effects.useChangeCityInfo({newCityArray, addNewCity, states});
 
   const clickCityButtonHandle = (city: string) => {
     setSelectedCity(city);
   }
+
+  const {
+    loadDispatch,
+  } = props;
 
   return (
     <div className={classes.root}>
@@ -123,11 +131,11 @@ const Page1: React.FC<IPage1Props> = (props) => {
   );
 }
 
-const mapStateToProps = (store: any) => ({
-  newCityArray: store.newCityInfoState.newCityArray
+const mapStateToProps = (store: IApplicationsState) => ({
+  weaterInformations: store.weatherInformations.data,
 });
 
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators({ addNewCity }, dispatch);
+const mapDispatchToProps = (dispatch: Dispatch) =>
+  bindActionCreators(WeatherInformationsActions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Page1);
