@@ -3,6 +3,7 @@ export enum WeatherInformationsTypes {
   LOAD_REQUEST = '@weather/LOAD_REQUEST',
   LOAD_SUCCESS = '@weather/LOAD_SUCCESS',
   LOAD_FAILURE = '@weather/LOAD_FAILURE',
+  LOAD_UPDATE = '@weather/LOAD_UPDATE',
 }
 
 // Data Types

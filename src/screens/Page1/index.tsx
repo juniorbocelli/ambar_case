@@ -22,12 +22,15 @@ import { IApplicationsState } from '../../store';
 import * as WeatherInformationsActions from '../../store/ducks/weatherInformations/actions';
 import { IWeatherInformations } from '../../store/ducks/weatherInformations/types';
 
+import { database } from '../../features/firebase/';
+
 interface IStateProps {
   weatherInformations: Array<IWeatherInformations>;
 }
 
 interface IDispatchProps {
   loadRequest(city: string): void;
+  loadUpdate(data: Array<IWeatherInformations>): void;
 }
 
 type IPage1Props = IStateProps & IDispatchProps;
@@ -50,7 +53,18 @@ const Page1: React.FC<IPage1Props> = (props) => {
   const {
     loadRequest,
     weatherInformations,
+    loadUpdate,
   } = props;
+
+  React.useEffect(() => {
+    const currentTempRef = database.ref('current_temp');
+    currentTempRef.on('value', (snapshot: any) => {
+      const data = snapshot.val();
+      console.log('currentTempData', data);
+
+      loadUpdate(data);
+    });
+  }, []);
 
   const clickCityButtonHandle = (city: string) => {
     setSelectedCity(city);

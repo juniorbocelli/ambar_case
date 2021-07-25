@@ -42,6 +42,12 @@ const reducer: Reducer<IWeatherInformationsState> = (state = INITIAL_STATE, acti
         data: [],
       }
 
+    case WeatherInformationsTypes.LOAD_UPDATE:
+      return {
+        ...state,
+        data: action.payload.data,
+      }
+
     default:
       return state;
   };

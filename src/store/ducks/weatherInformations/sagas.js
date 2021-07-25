@@ -1,8 +1,13 @@
 import {
-  call, put
+  call,
+  put,
+  fork,
 } from 'redux-saga/effects';
 
 import fetchCityWheaterInfoAPI from '../../../services/fetchCityWheaterInfoAPI';
+import setWeatherFirebaseAPI from '../../../services/setWeatherFirebaseAPI';
+import putWeatherLogFirebaseAPI from '../../../services/putWeatherLogFirebaseAPI';
+
 import {
   loadSuccess,
   loadFailure,
@@ -30,5 +35,14 @@ export function* load(dispatch) {
     console.error(error);
 
     yield put(loadFailure());
+  }
+}
+
+export function* success(dispatch) {
+  try {
+    yield fork(setWeatherFirebaseAPI, dispatch.payload);
+    yield fork(putWeatherLogFirebaseAPI, dispatch.payload);
+  } catch (error) {
+    console.error(error);
   }
 }
