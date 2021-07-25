@@ -6,6 +6,6 @@ import {
     SelectedCity,
 } from './types';
 
-export const loadRequest = (selectedCity: SelectedCity) => action(WeatherInformationsTypes.LOAD_REQUEST, selectedCity);
+export const loadRequest = (city: SelectedCity) => action(WeatherInformationsTypes.LOAD_REQUEST, city);
 export const loadSuccess = (data: IWeatherInformations) => action(WeatherInformationsTypes.LOAD_SUCCESS, { data });
 export const loadFailure = () => action(WeatherInformationsTypes.LOAD_FAILURE);

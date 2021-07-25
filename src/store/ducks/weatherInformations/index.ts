@@ -1,6 +1,10 @@
 import { Reducer } from 'redux';
 
-import { IWeatherInformationsState, WeatherInformationsTypes } from './types';
+import {
+  IWeatherInformationsState,
+  WeatherInformationsTypes,
+  IWeatherInformations,
+} from './types';
 
 const INITIAL_STATE: IWeatherInformationsState = {
   data: [],
@@ -17,11 +21,17 @@ const reducer: Reducer<IWeatherInformationsState> = (state = INITIAL_STATE, acti
       }
 
     case WeatherInformationsTypes.LOAD_SUCCESS:
+      let newData = state.data.filter((value: IWeatherInformations) => {
+        return action.payload.name !== value.name;
+      });
+
+      newData.push(action.payload.data);
+
       return {
         ...state,
         loading: false,
         error: false,
-        data: [...state.data, action.payload.data],
+        data: newData,
       }
 
     case WeatherInformationsTypes.LOAD_FAILURE:

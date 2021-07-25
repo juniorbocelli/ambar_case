@@ -10,10 +10,10 @@ import {
 
 import { printDateTimeFromTimestamp } from '../../../features/tools';
 
-export function* load(selectedCity) {
+export function* load(dispatch) {
   try {
     let newItem;
-    const response = yield call(fetchCityWheaterInfoAPI(selectedCity.payload));
+    const response = yield call(fetchCityWheaterInfoAPI(dispatch.payload));
 
     newItem = {
       name: response.data.name.tostring(),

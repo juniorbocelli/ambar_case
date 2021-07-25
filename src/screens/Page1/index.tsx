@@ -27,7 +27,7 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  loadDispatch: () => void;
+  loadDispatch(city: string): void;
 }
 
 interface IOwnProps {
@@ -39,8 +39,6 @@ type IPage1Props = IStateProps & IDispatchProps & IOwnProps;
 const Page1: React.FC<IPage1Props> = (props) => {
   const classes = useStyles();
   const states = useStates();
-  // const apis = useAPIs(states);
-  // const effects = useEffects(apis);
   const history = useHistory();
 
   const {
@@ -51,21 +49,19 @@ const Page1: React.FC<IPage1Props> = (props) => {
 
     selectedCity,
     setSelectedCity,
-    cityInfo
   } = states;
-
-  // Adiciona efeitos
-  // effects.useComponentDidMount();
-  // effects.useChangeSelectedCity(states);
-  // effects.useChangeCityInfo({newCityArray, addNewCity, states});
-
-  const clickCityButtonHandle = (city: string) => {
-    setSelectedCity(city);
-  }
 
   const {
     loadDispatch,
+    weatherInformations,
   } = props;
+
+  const clickCityButtonHandle = (city: string) => {
+    setSelectedCity(city);
+    loadDispatch(city);
+
+    console.log(weatherInformations);
+  }
 
   return (
     <div className={classes.root}>
@@ -135,7 +131,7 @@ const mapStateToProps = (store: IApplicationsState) => ({
   weaterInformations: store.weatherInformations.data,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) =>
+const mapDispatchToProps = (dispatch: Dispatch) => 
   bindActionCreators(WeatherInformationsActions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Page1);
