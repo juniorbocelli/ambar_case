@@ -17,8 +17,8 @@ import useStyles from './styles';
 import useStates from './states';
 
 import { SCREEN_PAGE_2 } from '../../globals/endpoints';
-import { IApplicationsState } from '../../store';
 
+import { IApplicationsState } from '../../store';
 import * as WeatherInformationsActions from '../../store/ducks/weatherInformations/actions';
 import { IWeatherInformations } from '../../store/ducks/weatherInformations/types';
 
@@ -56,21 +56,27 @@ const Page1: React.FC<IPage1Props> = (props) => {
     loadUpdate,
   } = props;
 
-  React.useEffect(() => {
-    const currentTempRef = database.ref('current_temp');
-    currentTempRef.on('value', (snapshot: any) => {
-      const data = snapshot.val();
-      console.log('currentTempData', data);
+  // React.useEffect(() => {
+  //   const currentTempRef = database.ref('current_temp');
+  //   currentTempRef.on('value', (snapshot: any) => {
+  //     const data = snapshot.val();
+  //     console.log('currentTempData', data);
 
-      loadUpdate(data);
-    });
-  }, []);
+  //     loadUpdate(data);
+  //   });
+  // }, []);
 
   const clickCityButtonHandle = (city: string) => {
     setSelectedCity(city);
     loadRequest(city);
 
     console.log(weatherInformations);
+  }
+
+  const getSelectedCityKey = () => {
+    return weatherInformations.indexOf(weatherInformations.filter((city: IWeatherInformations) => {
+      return city.name === selectedCity;
+    })[0]);
   }
 
   return (
@@ -122,7 +128,7 @@ const Page1: React.FC<IPage1Props> = (props) => {
 
         <Grid justifyContent="center" container className={classes.weatherCardContainer}>
           <Grid item>
-            {selectedCity && <CityWeatherCard {...states} />}
+            {selectedCity && <CityWeatherCard {...weatherInformations[getSelectedCityKey()]} />}
           </Grid>
         </Grid>
 

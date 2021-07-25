@@ -29,6 +29,8 @@ export function* load(dispatch) {
       date: printDateTimeFromTimestamp(new Date()),
     }
 
+    console.log(new Date())
+
     yield put(loadSuccess(newItem));
 
   } catch (error) {
@@ -40,8 +42,8 @@ export function* load(dispatch) {
 
 export function* success(dispatch) {
   try {
-    yield fork(setWeatherFirebaseAPI, dispatch.payload);
-    yield fork(putWeatherLogFirebaseAPI, dispatch.payload);
+    yield fork(setWeatherFirebaseAPI, dispatch.payload.data);
+    yield fork(putWeatherLogFirebaseAPI, dispatch.payload.data);
   } catch (error) {
     console.error(error);
   }

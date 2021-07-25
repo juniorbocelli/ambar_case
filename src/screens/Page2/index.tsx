@@ -14,13 +14,14 @@ import {
 } from '@material-ui/core';
 import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
-import { addNewCity } from '../../actions';
-import { NewCityInfo } from '../../reducers/addNewCity';
+import { bindActionCreators, Dispatch } from 'redux';
 
 import useStyles from './styles';
 import { SCREEN_PAGE_1 } from '../../globals/endpoints';
+
+import { IApplicationsState } from '../../store';
+import * as WeatherInformationsActions from '../../store/ducks/weatherInformations/actions';
+import { IWeatherInformations } from '../../store/ducks/weatherInformations/types';
 
 // Essas duas funções sobrescrevem as configurações das células e linhas do Material-UI
 const StyledTableCell = withStyles((theme: Theme) =>
@@ -45,17 +46,23 @@ const StyledTableRow = withStyles((theme: Theme) =>
   }),
 )(TableRow);
 
-interface IPage1Props {
-  addNewCity: (value: Array<NewCityInfo>) => void;
-  newCityArray: Array<NewCityInfo>;
+interface IStateProps {
+  weatherInformations: Array<IWeatherInformations>;
 }
 
-const Page2: React.FC<IPage1Props> = (props) => {
+interface IDispatchProps {
+  loadRequest(city: string): void;
+  loadUpdate(data: Array<IWeatherInformations>): void;
+}
+
+type IPage2Props = IStateProps & IDispatchProps;
+
+const Page2: React.FC<IPage2Props> = (props) => {
   const classes = useStyles();
   const history = useHistory();
 
   const {
-    newCityArray,
+    weatherInformations,
   } = props;
 
   return (
@@ -64,7 +71,7 @@ const Page2: React.FC<IPage1Props> = (props) => {
         <Typography variant='h4' className={classes.title}>Notas de Serviço Tomado</Typography>
 
         {
-          newCityArray.length !== 0
+          weatherInformations.length !== 0
             ?
             <Grid justifyContent="center" className={classes.mainContent} container>
               <Grid item>
@@ -79,10 +86,10 @@ const Page2: React.FC<IPage1Props> = (props) => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {newCityArray.map((row: NewCityInfo) => (
-                        <StyledTableRow key={row.cityName}>
+                      {weatherInformations.map((row: IWeatherInformations) => (
+                        <StyledTableRow key={row.name}>
                           <StyledTableCell component="th" scope="row">
-                            {row.cityName}
+                            {row.name}
                           </StyledTableCell>
                           <StyledTableCell align="right">{row.temp_min}</StyledTableCell>
                           <StyledTableCell align="right">{row.temp_max}</StyledTableCell>
@@ -115,11 +122,11 @@ const Page2: React.FC<IPage1Props> = (props) => {
   );
 }
 
-const mapStateToProps = (store: any) => ({
-  newCityArray: store.newCityInfoState.newCityArray
+const mapStateToProps = (store: IApplicationsState) => ({
+  weatherInformations: store.weatherInformations.data,
 });
 
-const mapDispatchToProps = (dispatch: any) =>
-  bindActionCreators({ addNewCity }, dispatch);
+const mapDispatchToProps = (dispatch: Dispatch) => 
+  bindActionCreators(WeatherInformationsActions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Page2);

@@ -14,11 +14,11 @@ export function printDateTimeFromTimestamp(timestamp: Date | number | string): s
   }
 
   year = String(date.getUTCFullYear());
-  month = twoZeros(date.getUTCMonth() + 1);
-  day = twoZeros(date.getUTCDate());
+  month = twoZeros(date.getMonth() + 1);
+  day = twoZeros(date.getDate());
 
-  hour = twoZeros(date.getUTCHours());
-  minute = twoZeros(date.getUTCMinutes());
+  hour = twoZeros(date.getHours());
+  minute = twoZeros(date.getMinutes());
 
   return day + "/" + month + "/" + year + " " + hour + ":" + minute;
 }

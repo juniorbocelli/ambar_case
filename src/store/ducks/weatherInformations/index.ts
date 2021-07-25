@@ -21,11 +21,17 @@ const reducer: Reducer<IWeatherInformationsState> = (state = INITIAL_STATE, acti
       }
 
     case WeatherInformationsTypes.LOAD_SUCCESS:
-      let newData = state.data.filter((value: IWeatherInformations) => {
-        return action.payload.name !== value.name;
-      });
+      let newData: Array<IWeatherInformations>;
 
-      newData.push(action.payload.data);
+      if (typeof (state.data) !== "undefined") {
+        newData = state.data.filter((value: IWeatherInformations) => {
+          return action.payload.data.name !== value.name;
+        });
+
+        newData.push(action.payload.data);
+      } else {
+        newData = state.data;
+      }
 
       return {
         ...state,
