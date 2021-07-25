@@ -13,10 +13,10 @@ import { printDateTimeFromTimestamp } from '../../../features/tools';
 export function* load(dispatch) {
   try {
     let newItem;
-    const response = yield call(fetchCityWheaterInfoAPI(dispatch.payload));
+    const response = yield call(fetchCityWheaterInfoAPI, dispatch.payload);
 
     newItem = {
-      name: response.data.name.tostring(),
+      name: response.data.name,
       temp: response.data.main.temp.toString().replace(".", ","),
       temp_min: response.data.main.temp_min.toString().replace(".", ","),
       temp_max: response.data.main.temp_max.toString().replace(".", ","),

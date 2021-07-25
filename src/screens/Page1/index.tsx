@@ -27,14 +27,10 @@ interface IStateProps {
 }
 
 interface IDispatchProps {
-  loadDispatch(city: string): void;
+  loadRequest(city: string): void;
 }
 
-interface IOwnProps {
-
-}
-
-type IPage1Props = IStateProps & IDispatchProps & IOwnProps;
+type IPage1Props = IStateProps & IDispatchProps;
 
 const Page1: React.FC<IPage1Props> = (props) => {
   const classes = useStyles();
@@ -52,13 +48,13 @@ const Page1: React.FC<IPage1Props> = (props) => {
   } = states;
 
   const {
-    loadDispatch,
+    loadRequest,
     weatherInformations,
   } = props;
 
   const clickCityButtonHandle = (city: string) => {
     setSelectedCity(city);
-    loadDispatch(city);
+    loadRequest(city);
 
     console.log(weatherInformations);
   }
@@ -128,7 +124,7 @@ const Page1: React.FC<IPage1Props> = (props) => {
 }
 
 const mapStateToProps = (store: IApplicationsState) => ({
-  weaterInformations: store.weatherInformations.data,
+  weatherInformations: store.weatherInformations.data,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => 
