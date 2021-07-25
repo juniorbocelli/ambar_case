@@ -16,10 +16,14 @@ export interface IWeatherInformations {
   icon: string;
 }
 export type SelectedCity = string;
+export type ErrorMessage = string;
 
 // State types
 export interface IWeatherInformationsState {
   readonly data: Array<IWeatherInformations>;
   readonly loading: boolean;
-  readonly error: boolean;
+  readonly error: {
+    hasError: boolean;
+    errorMessage: string;
+  };
 }

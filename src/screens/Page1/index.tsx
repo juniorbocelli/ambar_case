@@ -26,6 +26,12 @@ import { database } from '../../features/firebase/';
 
 interface IStateProps {
   weatherInformations: Array<IWeatherInformations>;
+  isQueryingAPI: boolean;
+  errorAPI: {
+    hasError: boolean;
+    errorMessage: string;
+  }
+
 }
 
 interface IDispatchProps {
@@ -41,16 +47,13 @@ const Page1: React.FC<IPage1Props> = (props) => {
   const history = useHistory();
 
   const {
-    isQueryingAPI,
-    hasErrorMessage,
-    errorMessage,
-    setHasErrorMessage,
-
     selectedCity,
     setSelectedCity,
   } = states;
 
   const {
+    isQueryingAPI,
+    errorAPI,
     loadRequest,
     weatherInformations,
     loadUpdate,
@@ -83,13 +86,13 @@ const Page1: React.FC<IPage1Props> = (props) => {
     <div className={classes.root}>
       <BackDrop open={isQueryingAPI} />
 
-      <AlertDialog
+      {/* <AlertDialog
         id="error-alert-dialog"
-        open={hasErrorMessage}
+        open={errorAPI.hasError}
         title="Erro"
-        content={errorMessage}
+        content={errorAPI.errorMessage}
         onClose={() => setHasErrorMessage(false)}
-      />
+      /> */}
 
       <Paper className={classes.content} elevation={0} square>
         <Typography variant='h4' className={classes.title}>Notas de Serviço Tomado</Typography>
@@ -145,6 +148,8 @@ const Page1: React.FC<IPage1Props> = (props) => {
 
 const mapStateToProps = (store: IApplicationsState) => ({
   weatherInformations: store.weatherInformations.data,
+  isQueryingAPI: store.weatherInformations.loading,
+  errorAPI: store.weatherInformations.error,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => 

@@ -8,7 +8,10 @@ import {
 
 const INITIAL_STATE: IWeatherInformationsState = {
   data: [],
-  error: false,
+  error: {
+    hasError: false,
+    errorMessage: '',
+  },
   loading: false,
 }
 
@@ -36,7 +39,10 @@ const reducer: Reducer<IWeatherInformationsState> = (state = INITIAL_STATE, acti
       return {
         ...state,
         loading: false,
-        error: false,
+        error: {
+          hasError: false,
+          errorMessage: '',
+        },
         data: newData,
       }
 
@@ -44,7 +50,10 @@ const reducer: Reducer<IWeatherInformationsState> = (state = INITIAL_STATE, acti
       return {
         ...state,
         loading: false,
-        error: true,
+        error: {
+          hasError: true,
+          errorMessage: action.payload.errorMesage,
+        },
         data: [],
       }
 
