@@ -16,12 +16,14 @@ import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 
-import useStyles from './styles';
 import { SCREEN_PAGE_1 } from '../../globals/endpoints';
 
 import { IApplicationsState } from '../../store';
 import * as WeatherInformationsActions from '../../store/ducks/weatherInformations/actions';
 import { IWeatherInformations } from '../../store/ducks/weatherInformations/types';
+import { IPage2Props } from './types';
+
+import useStyles from './styles';
 
 // Essas duas funções sobrescrevem as configurações das células e linhas do Material-UI
 const StyledTableCell = withStyles((theme: Theme) =>
@@ -45,17 +47,6 @@ const StyledTableRow = withStyles((theme: Theme) =>
     },
   }),
 )(TableRow);
-
-interface IStateProps {
-  weatherInformations: Array<IWeatherInformations>;
-}
-
-interface IDispatchProps {
-  loadRequest(city: string): void;
-  loadUpdate(data: Array<IWeatherInformations>): void;
-}
-
-type IPage2Props = IStateProps & IDispatchProps;
 
 const Page2: React.FC<IPage2Props> = (props) => {
   const classes = useStyles();

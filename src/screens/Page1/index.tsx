@@ -13,17 +13,15 @@ import BackDrop from '../../ui/components/BackDrop';
 import AlertDialog from '../../ui/components/AlertDialog';
 import CityWeatherCard from './components/CityWeatherCard';
 
-import useStyles from './styles';
-import useStates from './states';
-
 import { SCREEN_PAGE_2 } from '../../globals/endpoints';
 
 import { IApplicationsState } from '../../store';
 import * as WeatherInformationsActions from '../../store/ducks/weatherInformations/actions';
 import { IWeatherInformations } from '../../store/ducks/weatherInformations/types';
 
-import { database } from '../../features/firebase/';
-import removeWeatherFirebaseAPI from '../../services/removeWeatherFirebaseAPI';
+import useStyles from './styles';
+import useStates from './states';
+import useEffects from './effects';
 
 interface IStateProps {
   weatherInformations: Array<IWeatherInformations>;
@@ -43,8 +41,10 @@ interface IDispatchProps {
 type IPage1Props = IStateProps & IDispatchProps;
 
 const Page1: React.FC<IPage1Props> = (props) => {
+  // Chama os hooks
   const classes = useStyles();
   const states = useStates();
+  const effects = useEffects();
   const history = useHistory();
 
   const {
@@ -57,59 +57,10 @@ const Page1: React.FC<IPage1Props> = (props) => {
     errorAPI,
     loadRequest,
     weatherInformations,
-    loadUpdate,
   } = props;
 
-  const currentWeatherWatchdog = () => {
-    const currentTempRef = database.ref('current_temp');
-
-    currentTempRef.on('value', (snapshot: any) => {
-      let data = snapshot.val();
-      let arrayData: Array<IWeatherInformations> = [];
-      console.log('currentTempData', data);
-
-
-      // Já que os dados no Firebase (Real Time) são gravados como documentos JSON, é 
-      // necessário converter a saída para o formato de dados definido no Redux.
-      if (data !== null) {
-        Object.keys(data).forEach((value, key) => {
-          let line: IWeatherInformations;
-          console.log(value, key);
-  
-          line = {
-            name: value,
-            temp: data[value].temp,
-            temp_min: data[value].temp_min,
-            temp_max: data[value].temp_max,
-            date: data[value].date,
-            icon: data[value].icon,
-          }
-  
-          console.log('line', line)
-
-          arrayData.push(line);
-  
-        });
-
-        console.log('arrayData', arrayData);
-
-        loadUpdate(arrayData);
-      }
-    });
-  }
-
-  const convertData = (data: any) => {
-    let arrayData: Array<IWeatherInformations> = [];
-  }
-
-  React.useEffect(() => {
-    // Remove os dados correntes quando o aplicativo é iniciado
-    if (weatherInformations.length === 0) removeWeatherFirebaseAPI();
-
-    // Aciona motiromanento de dados do Firebase e manda atualização para o Redux-Saga
-    // atualizar o estado, quando necessário.
-    currentWeatherWatchdog();
-  }, []);
+  // Ativa efeito ao montar componente
+  effects.useComponentDidMount(props);
 
   const clickCityButtonHandle = (city: string) => {
     setSelectedCity(city);

@@ -1,13 +1,22 @@
-export type IsQueryingAPIState = boolean;
-export type HasErrorMessageState = boolean;
-export type ErrorMessageState = string;
+import { IWeatherInformations } from '../../store/ducks/weatherInformations/types';
 
+// Tipos dos estados locais
 export type SelectedCityState = undefined | string;
-export type CityInfoState = {
-    name: string;
-    temp: string;
-    temp_min: string;
-    temp_max: string;
-    icon: string;
-    date: string;
+
+// Tipos e interface do componente principal
+export interface IStateProps {
+    weatherInformations: Array<IWeatherInformations>;
+    isQueryingAPI: boolean;
+    errorAPI: {
+        hasError: boolean;
+        errorMessage: string;
+    }
+
 }
+
+export interface IDispatchProps {
+    loadRequest(city: string): void;
+    loadUpdate(data: Array<IWeatherInformations>): void;
+}
+
+export type IPage1Props = IStateProps & IDispatchProps;
