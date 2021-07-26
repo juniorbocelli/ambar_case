@@ -1,13 +1,15 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators, Dispatch } from 'redux';
 import {
   Paper,
   Typography,
   Grid,
   Button,
+  Divider,
 } from '@material-ui/core';
-import { connect } from 'react-redux';
-import { bindActionCreators, Dispatch } from 'redux';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 import BackDrop from '../../ui/components/BackDrop';
 import AlertDialog from '../../ui/components/AlertDialog';
@@ -73,7 +75,9 @@ const Page1: React.FC<IPage1Props> = (props) => {
       />
 
       <Paper className={classes.content} elevation={0} square>
-        <Typography variant='h4' className={classes.title}>Notas de Serviço Tomado</Typography>
+        <Typography variant='h4' className={classes.title}>Verificar Previsão de Tempo</Typography>
+
+        <Divider />
 
         <Grid container justifyContent="space-around" className={classes.buttonsContainer}>
           <Grid item>
@@ -115,7 +119,12 @@ const Page1: React.FC<IPage1Props> = (props) => {
 
         <Grid justifyContent="flex-end" container>
           <Grid item>
-            <Button onClick={() => history.push(SCREEN_PAGE_2)}>Mostrar Min/Max</Button>
+            <Button
+              onClick={() => history.push(SCREEN_PAGE_2)}
+              endIcon={<NavigateNextIcon />}
+            >
+              Últimas Consultas
+            </Button>
           </Grid>
         </Grid>
 

@@ -1,5 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators, Dispatch } from 'redux';
 import {
   Paper,
   Typography,
@@ -11,10 +13,10 @@ import {
   TableRow,
   TableBody,
   TableCell,
+  Divider,
 } from '@material-ui/core';
 import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { connect } from 'react-redux';
-import { bindActionCreators, Dispatch } from 'redux';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 
 import { SCREEN_PAGE_1 } from '../../globals/endpoints';
 
@@ -59,7 +61,9 @@ const Page2: React.FC<IPage2Props> = (props) => {
   return (
     <div className={classes.root}>
       <Paper className={classes.content} elevation={0} square>
-        <Typography variant='h4' className={classes.title}>Notas de Serviço Tomado</Typography>
+        <Typography variant='h4' className={classes.title}>Últimas Consultas</Typography>
+
+        <Divider />
 
         {
           weatherInformations.length !== 0
@@ -104,7 +108,12 @@ const Page2: React.FC<IPage2Props> = (props) => {
 
         <Grid justifyContent="flex-start" container>
           <Grid item>
-            <Button onClick={() => history.push(SCREEN_PAGE_1)}>Voltar</Button>
+            <Button
+              onClick={() => history.push(SCREEN_PAGE_1)}
+              startIcon={<NavigateBeforeIcon />}
+            >
+              Voltar
+            </Button>
           </Grid>
         </Grid>
 
@@ -117,7 +126,7 @@ const mapStateToProps = (store: IApplicationsState) => ({
   weatherInformations: store.weatherInformations.data,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => 
+const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(WeatherInformationsActions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Page2);

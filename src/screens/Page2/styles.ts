@@ -8,20 +8,19 @@ const useStyles = makeStyles((theme: Theme) =>
     content: {
       width: '100%',
       padding: theme.spacing(1, 2, 2, 2),
-      minHeight: 300,
+      marginTop: theme.spacing(2),
+      minHeight: 400,
     },
     title: {
-      marginBottom: theme.spacing(4),
-    },
-    formControl: {
-      margin: theme.spacing(0),
-      minWidth: 200,
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(1),
     },
     table: {
       minWidth: 700
     },
     mainContent: {
-      minHeight: 200
+      minHeight: 450,
+      marginTop: theme.spacing(5),
     }
   }),
 );
