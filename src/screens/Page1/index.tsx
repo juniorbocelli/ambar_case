@@ -67,7 +67,7 @@ const Page1: React.FC<IPage1Props> = (props) => {
       let data = snapshot.val();
       let arrayData: Array<IWeatherInformations> = [];
       console.log('currentTempData', data);
-      console.log('weatherInformations', weatherInformations);
+
 
       // Já que os dados no Firebase (Real Time) são gravados como documentos JSON, é 
       // necessário converter a saída para o formato de dados definido no Redux.
