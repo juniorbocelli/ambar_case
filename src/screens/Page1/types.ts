@@ -8,7 +8,7 @@ export interface IStateProps {
     weatherInformations: Array<IWeatherInformations>;
     isQueryingAPI: boolean;
     errorAPI: {
-        hasError: boolean;
+        hasError: null | boolean;
         errorMessage: string;
     }
 
@@ -16,7 +16,8 @@ export interface IStateProps {
 
 export interface IDispatchProps {
     loadRequest(city: string): void;
-    loadUpdate(data: Array<IWeatherInformations>): void;
+    updateRequest(data: Array<IWeatherInformations>): void;
+    changeErrorEntry(): void;
 }
 
 export type IPage1Props = IStateProps & IDispatchProps;

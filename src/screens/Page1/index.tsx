@@ -18,27 +18,11 @@ import { SCREEN_PAGE_2 } from '../../globals/endpoints';
 import { IApplicationsState } from '../../store';
 import * as WeatherInformationsActions from '../../store/ducks/weatherInformations/actions';
 import { IWeatherInformations } from '../../store/ducks/weatherInformations/types';
+import { IPage1Props } from './types';
 
 import useStyles from './styles';
 import useStates from './states';
 import useEffects from './effects';
-
-interface IStateProps {
-  weatherInformations: Array<IWeatherInformations>;
-  isQueryingAPI: boolean;
-  errorAPI: {
-    hasError: boolean;
-    errorMessage: string;
-  }
-
-}
-
-interface IDispatchProps {
-  loadRequest(city: string): void;
-  loadUpdate(data: Array<IWeatherInformations>): void;
-}
-
-type IPage1Props = IStateProps & IDispatchProps;
 
 const Page1: React.FC<IPage1Props> = (props) => {
   // Chama os hooks
@@ -57,6 +41,7 @@ const Page1: React.FC<IPage1Props> = (props) => {
     errorAPI,
     loadRequest,
     weatherInformations,
+    changeErrorEntry,
   } = props;
 
   // Ativa efeito ao montar componente
@@ -79,13 +64,13 @@ const Page1: React.FC<IPage1Props> = (props) => {
     <div className={classes.root}>
       <BackDrop open={isQueryingAPI} />
 
-      {/* <AlertDialog
+      <AlertDialog
         id="error-alert-dialog"
-        open={errorAPI.hasError}
+        open={errorAPI.hasError ? true : false}
         title="Erro"
         content={errorAPI.errorMessage}
-        onClose={() => setHasErrorMessage(false)}
-      /> */}
+        onClose={() => changeErrorEntry()}
+      />
 
       <Paper className={classes.content} elevation={0} square>
         <Typography variant='h4' className={classes.title}>Notas de Serviço Tomado</Typography>

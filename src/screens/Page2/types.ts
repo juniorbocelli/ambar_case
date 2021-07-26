@@ -6,7 +6,7 @@ export interface IStateProps {
 
 interface IDispatchProps {
   loadRequest(city: string): void;
-  loadUpdate(data: Array<IWeatherInformations>): void;
+  updateRequest(data: Array<IWeatherInformations>): void;
 }
 
 export type IPage2Props = IStateProps & IDispatchProps;

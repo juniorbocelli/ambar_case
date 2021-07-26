@@ -14,7 +14,7 @@ export default function useEffects(): IUseEffects {
 
   const currentWeatherWatchdog = (props: IPage1Props) => {
     const {
-      loadUpdate,
+      updateRequest,
     } = props;
 
     const currentTempRef = database.ref('current_temp');
@@ -49,7 +49,7 @@ export default function useEffects(): IUseEffects {
 
         console.log('arrayData', arrayData);
 
-        loadUpdate(arrayData);
+        updateRequest(arrayData);
       }
     });
   }

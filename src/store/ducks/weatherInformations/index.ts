@@ -21,7 +21,7 @@ const reducer: Reducer<IWeatherInformationsState> = (state = INITIAL_STATE, acti
       return {
         ...state,
         loading: true,
-      }
+      };
 
     case WeatherInformationsTypes.LOAD_SUCCESS:
       let newData: Array<IWeatherInformations>;
@@ -34,7 +34,7 @@ const reducer: Reducer<IWeatherInformationsState> = (state = INITIAL_STATE, acti
         newData.push(action.payload.data);
       } else {
         newData = state.data;
-      }
+      };
 
       return {
         ...state,
@@ -44,7 +44,7 @@ const reducer: Reducer<IWeatherInformationsState> = (state = INITIAL_STATE, acti
           errorMessage: '',
         },
         data: newData,
-      }
+      };
 
     case WeatherInformationsTypes.LOAD_FAILURE:
       return {
@@ -55,13 +55,22 @@ const reducer: Reducer<IWeatherInformationsState> = (state = INITIAL_STATE, acti
           errorMessage: action.payload.errorMesage,
         },
         data: [],
-      }
+      };
 
     case WeatherInformationsTypes.LOAD_UPDATE:
       return {
         ...state,
         data: action.payload.data,
-      }
+      };
+
+    case WeatherInformationsTypes.CHANGE_ERROR_ENTRY:
+      return {
+        ...state,
+        error: {
+          hasError: null,
+          errorMessage: state.error.errorMessage,
+        }
+      };
 
     default:
       return state;

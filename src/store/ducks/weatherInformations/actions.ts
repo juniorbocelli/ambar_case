@@ -11,4 +11,6 @@ export const loadRequest = (city: SelectedCity) => action(WeatherInformationsTyp
 export const loadSuccess = (data: IWeatherInformations) => action(WeatherInformationsTypes.LOAD_SUCCESS, { data });
 export const loadFailure = (errorMesage: ErrorMessage) => action(WeatherInformationsTypes.LOAD_FAILURE, { errorMesage });
 
-export const loadUpdate = (data: Array<IWeatherInformations>) => action(WeatherInformationsTypes.LOAD_UPDATE,  { data });
+export const updateRequest = (data: Array<IWeatherInformations>) => action(WeatherInformationsTypes.LOAD_UPDATE,  { data });
+
+export const changeErrorEntry = () => action(WeatherInformationsTypes.CHANGE_ERROR_ENTRY);

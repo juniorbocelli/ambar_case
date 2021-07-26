@@ -4,6 +4,8 @@ export enum WeatherInformationsTypes {
   LOAD_SUCCESS = '@weather/LOAD_SUCCESS',
   LOAD_FAILURE = '@weather/LOAD_FAILURE',
   LOAD_UPDATE = '@weather/LOAD_UPDATE',
+
+  CHANGE_ERROR_ENTRY = '@weather/CHANGE_ERROR_ENTRY',
 }
 
 // Data Types
@@ -23,7 +25,7 @@ export interface IWeatherInformationsState {
   readonly data: Array<IWeatherInformations>;
   readonly loading: boolean;
   readonly error: {
-    hasError: boolean;
+    hasError: null | boolean;
     errorMessage: string;
   };
 }
