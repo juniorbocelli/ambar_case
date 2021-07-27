@@ -23,7 +23,7 @@ const CityWeatherCard: React.FC<IWeatherInformations> = (props) => {
           {props.date}
         </Typography>
 
-        <Typography className={classes.city} variant="h4" component="h2">
+        <Typography className={classes.city} variant="h4" component="h2" data-testid={`city-name-${props.name}`}>
           {props.name}
         </Typography>
 
